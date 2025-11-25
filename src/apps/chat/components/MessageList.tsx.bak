@@ -1,19 +1,18 @@
-﻿import { useEffect, useRef } from "react";
-import { useChat } from "../../../hooks/useChat";
-import { MessageItem } from "./MessageItem";
-import { CHAT_TEXT } from "../uiConfig";
+import { useEffect, useRef } from 'react'
+import { useChat } from '../../../hooks/useChat'
+import { MessageItem } from './MessageItem'
 
 export function MessageList() {
-  const { currentSession, setInputMode, theme } = useChat();
-  const messages = currentSession?.messages ?? [];
-  const endRef = useRef<HTMLDivElement | null>(null);
-  const isDark = theme === "dark";
+  const { currentSession, setInputMode, theme } = useChat()
+  const messages = currentSession?.messages ?? []
+  const endRef = useRef<HTMLDivElement | null>(null)
+  const isDark = theme === 'dark'
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages.length]);
+    endRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages.length])
 
-  const hasMode = !!currentSession?.inputMode;
+  const hasMode = !!currentSession?.inputMode
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-6 space-y-4">
@@ -38,11 +37,9 @@ export function MessageList() {
                 </svg>
               </div>
               <div className="space-y-1 text-center">
-                <p className="text-sm font-medium text-zinc-300">
-                  {CHAT_TEXT.emptyTitle}
-                </p>
+                <p className="text-sm font-medium text-zinc-300">No hay mensajes todavia</p>
                 <p className="text-xs text-zinc-500">
-                  {CHAT_TEXT.emptyBodyFirstMessage}
+                  Escribe tu primer mensaje para iniciar el analisis.
                 </p>
               </div>
             </div>
@@ -65,11 +62,9 @@ export function MessageList() {
                 </svg>
               </div>
               <div className="space-y-1 text-center">
-                <p className="text-sm font-medium text-[#1F2937]">
-                  {CHAT_TEXT.emptyTitle}
-                </p>
+                <p className="text-sm font-medium text-[#1F2937]">No hay mensajes todavia</p>
                 <p className="text-xs text-[#6B7280]">
-                  {CHAT_TEXT.emptyBodyFirstMessage}
+                  Escribe tu primer mensaje para iniciar el analisis.
                 </p>
               </div>
             </div>
@@ -77,39 +72,40 @@ export function MessageList() {
         ) : isDark ? (
           <div className="mt-10 rounded-2xl border border-zinc-800 bg-zinc-900/60 px-5 py-6 shadow-sm">
             <h2 className="text-sm font-semibold text-zinc-100">
-              {CHAT_TEXT.modeTitle}
+              ¿Como vas a escribir en este chat?
             </h2>
             <p className="mt-2 text-xs text-zinc-400">
-              {CHAT_TEXT.modeDescription}
+              Elige si vas a escribir pseudocodigo (por ejemplo, pasos de un algoritmo) o lenguaje natural
+              (explicaciones en texto). Mas adelante usaremos esta eleccion para ajustar el analisis.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={() => setInputMode("pseudocode")}
+                onClick={() => setInputMode('pseudocode')}
                 className="inline-flex items-center gap-2 rounded-lg border border-indigo-500/60 bg-indigo-600/20 px-3 py-2 text-xs font-medium text-indigo-100 hover:bg-indigo-600/30 focus:outline-none focus:ring-2 focus:ring-indigo-500/70"
               >
                 <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-indigo-600 text-[11px] font-semibold text-white">
                   P
                 </span>
                 <span>
-                  {CHAT_TEXT.modePseudocodeLabel}
+                  Pseudocodigo
                   <span className="block text-[11px] font-normal text-indigo-200/80">
-                    {CHAT_TEXT.modePseudocodeHint}
+                    Ideal para pasos de algoritmos.
                   </span>
                 </span>
               </button>
               <button
                 type="button"
-                onClick={() => setInputMode("natural")}
+                onClick={() => setInputMode('natural')}
                 className="inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800/60 px-3 py-2 text-xs font-medium text-zinc-100 hover:bg-zinc-700/70 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
               >
                 <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-zinc-700 text-[11px] font-semibold text-white">
                   N
                 </span>
                 <span>
-                  {CHAT_TEXT.modeNaturalLabel}
+                  Lenguaje natural
                   <span className="block text-[11px] font-normal text-zinc-300/90">
-                    {CHAT_TEXT.modeNaturalHint}
+                    Describe el problema con tus propias palabras.
                   </span>
                 </span>
               </button>
@@ -121,39 +117,40 @@ export function MessageList() {
         ) : (
           <div className="mt-10 rounded-2xl border border-[#E5E7EB] bg-white px-5 py-6 shadow-sm">
             <h2 className="text-sm font-semibold text-[#1F2937]">
-              {CHAT_TEXT.modeTitle}
+              ¿Como vas a escribir en este chat?
             </h2>
             <p className="mt-2 text-xs text-[#6B7280]">
-              {CHAT_TEXT.modeDescription}
+              Elige si vas a escribir pseudocodigo (por ejemplo, pasos de un algoritmo) o lenguaje natural
+              (explicaciones en texto). Mas adelante usaremos esta eleccion para ajustar el analisis.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={() => setInputMode("pseudocode")}
+                onClick={() => setInputMode('pseudocode')}
                 className="inline-flex items-center gap-2 rounded-lg border border-[#5A31F4]/60 bg-[#5A31F4]/10 px-3 py-2 text-xs font-medium text-[#1F2937] hover:bg-[#5A31F4]/20 focus:outline-none focus:ring-2 focus:ring-[#5A31F4]/70"
               >
                 <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[#5A31F4] text-[11px] font-semibold text-white">
                   P
                 </span>
                 <span>
-                  {CHAT_TEXT.modePseudocodeLabel}
+                  Pseudocodigo
                   <span className="block text-[11px] font-normal text-[#6B7280]">
-                    {CHAT_TEXT.modePseudocodeHint}
+                    Ideal para pasos de algoritmos.
                   </span>
                 </span>
               </button>
               <button
                 type="button"
-                onClick={() => setInputMode("natural")}
+                onClick={() => setInputMode('natural')}
                 className="inline-flex items-center gap-2 rounded-lg border border-transparent bg-[#FFB400] px-3 py-2 text-xs font-medium text-[#1F1F1F] hover:bg-[#E6A000] focus:outline-none focus:ring-2 focus:ring-[#FFB400]/60"
               >
                 <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[#1F2937] text-[11px] font-semibold text-white">
                   N
                 </span>
                 <span>
-                  {CHAT_TEXT.modeNaturalLabel}
+                  Lenguaje natural
                   <span className="block text-[11px] font-normal text-[#374151]">
-                    {CHAT_TEXT.modeNaturalHint}
+                    Describe el problema con tus propias palabras.
                   </span>
                 </span>
               </button>
@@ -168,5 +165,5 @@ export function MessageList() {
       )}
       <div ref={endRef} />
     </div>
-  );
+  )
 }

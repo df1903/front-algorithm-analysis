@@ -1,5 +1,7 @@
 export type Role = 'user' | 'assistant'
 
+export type InputMode = 'pseudocode' | 'natural'
+
 export interface ChatMessage {
   id: string
   role: Role
@@ -9,6 +11,6 @@ export interface ChatMessage {
 export interface ChatSession {
   id: string
   title: string
+  inputMode: InputMode | null
   messages: ChatMessage[]
 }
-
