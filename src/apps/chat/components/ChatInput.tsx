@@ -35,6 +35,12 @@ export function ChatInput() {
     ? CHAT_TEXT.inputAnalyzingPlaceholder
     : CHAT_TEXT.inputDefaultPlaceholder;
 
+  const endpointHint = !hasMode
+    ? "Selecciona un modo para habilitar el envio."
+    : currentSession?.inputMode === "natural"
+    ? 'Se enviara al endpoint /api/analyzer/natural-to-pseudocode como { description: "..." }'
+    : 'Se enviara al endpoint /api/analyzer/ast como { text: "..." }';
+
   return (
     <form onSubmit={onSubmit} className="max-w-3xl mx-auto">
       <div className="flex gap-2 items-end">
@@ -91,9 +97,7 @@ export function ChatInput() {
           )}
         </button>
       </div>
-      <p className="mt-2 text-xs text-zinc-400 text-center">
-        Se enviara al endpoint /api/analyzer/ast como <code>{'{ text: "..." }'}</code>
-      </p>
+      <p className="mt-2 text-xs text-zinc-400 text-center">{endpointHint}</p>
     </form>
   );
 }

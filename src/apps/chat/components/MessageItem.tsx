@@ -1,6 +1,7 @@
 ﻿import type { ChatMessage } from "../../../interfaces/chat";
 import { useChat } from "../../../hooks/useChat";
 import { ERROR_TEXT } from "../uiConfig";
+import { AnalysisCard } from "./AnalysisCard";
 
 function renderContent(content: string, isDark: boolean) {
   if (content.startsWith("```")) {
@@ -36,18 +37,28 @@ export function MessageItem({ message }: { message: ChatMessage }) {
   const { retryLast, isLoading, theme } = useChat();
   const isDark = theme === "dark";
   const isUser = message.role === "user";
-  const isError = !isUser && /^\s*error:/i.test(message.content);
+  const hasAnalysis = !isUser && !!message.analysis;
+  const isError = !isUser && !hasAnalysis && /^\s*error:/i.test(message.content);
 
-  const bubbleBase = "w-full rounded-2xl px-4 py-3 shadow-sm";
-  const bubbleClasses = isUser
-    ? isDark
-      ? "bg-indigo-600 text-white"
-      : "bg-[#E0E7FF] text-[#1F2937]"
-    : isError
-      ? "bg-red-50 border border-red-300 text-red-700"
-      : isDark
-        ? "bg-zinc-900/95 border border-zinc-800 text-zinc-100"
-        : "bg-[#F3F4F6] border border-[#E5E7EB] text-[#1F2937]";
+  const bubbleBase = hasAnalysis
+    ? "w-full rounded-2xl p-4 shadow-sm"
+    : "w-full rounded-2xl px-4 py-3 shadow-sm";
+  const bubbleClasses = (() => {
+    if (isUser) {
+      return isDark ? "bg-indigo-600 text-white" : "bg-[#E0E7FF] text-[#1F2937]";
+    }
+    if (isError) {
+      return "bg-red-50 border border-red-300 text-red-700";
+    }
+    if (hasAnalysis) {
+      return isDark
+        ? "bg-zinc-950 border border-zinc-800 text-zinc-100"
+        : "bg-white border border-[#E5E7EB] text-[#1F2937]";
+    }
+    return isDark
+      ? "bg-zinc-900/95 border border-zinc-800 text-zinc-100"
+      : "bg-[#F3F4F6] border border-[#E5E7EB] text-[#1F2937]";
+  })();
 
   const errorType = isError ? classifyError(message.content) : null;
   const friendlyText =
@@ -130,6 +141,8 @@ export function MessageItem({ message }: { message: ChatMessage }) {
                 </details>
               </div>
             </div>
+          ) : hasAnalysis && message.analysis ? (
+            <AnalysisCard data={message.analysis} isDark={isDark} />
           ) : (
             renderContent(message.content, isDark)
           )}
